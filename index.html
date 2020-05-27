@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<head>
+<title>Rock Papers Scissors</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+    <header class = "mainHeader" > Rock Paper Scissors </header>
+    <div class="container">
+         <h3 class = "selectorTitle"> choose your weapon </h3>
+         <select name="weapon" class="weaponSelector" id = "weaponSelect" >
+             <option value="8">--select--</option>
+             <option value="0"> Rock </option>
+             <option value="1"> Paper </option>
+             <option value="2"> Scissors </option>
+         </select>
+         <button class="goButton" onclick="RPS(computerSelection(),playerSelection())"> GO! </button>
+         <div class = "returns">
+             <div class = "pcReturn">
+                <h4 class = player2Return> player 2 got : </h4>
+                 <p id = "return" class = "return"></p> 
+             </div>
+             <div class = "gameResult">
+                 <h4 class = "resultTitle">restult :</h4>
+                <p id = "result" class = "result"></p>
+             </div>
+         </div>
+         <div class = "score">
+            <h4> scoreboard </h4>
+            <p class = plPrefix> you : </p>
+            <p id = "scorePl" class = "scoreReturnPl" >   </p>
+            <p class = pcPrefix> player 2 : </p>
+            <p id = "scorePc" class = "scoreReturnPc">   </p>
+        </div>
+        <div id="endScreen" class="overlay">
+            <div class="overlay-content">
+                 <p id= "endBanner" class = "endBanner"></p>
+
+                 <button id="retry" class = "retry" onclick="location.reload()"> play again </button>
+            </div>
+        
+        </div>
+
+    </div> <!--///////////////////////////////////////////  H T M L  E N D \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
+    <script>
+
+        function computerSelection(){
+             var computerChoice = Math.floor((Math.random() * (3 - 0)) + 0);
+             const weapons = [" rock "," paper "," scissors "];
+             var index = weapons[computerChoice];
+             document.getElementById("return").innerHTML = index;
+             console.log("value selected by the computer " + computerChoice + " (" + index + ")" );
+             return computerChoice;
+
+        }
+        function playerSelection(){
+            const elem = document.getElementById("weaponSelect");
+            const playerChoice = elem.value;
+            console.log("value selected by player " + playerChoice);
+            return playerChoice;
+        }
+
+
+        playerSelection();
+        computerSelection();
+
+        // piedra = 0 ; papel = 1 ; tijera = 2
+        let matches = 0 ;
+        let playerScore = 0 ;
+        let computerScore = 0 ;
+        function RPS(computerChoice,playerChoice){ 
+            
+            var print = ' ';
+       
+            console.log( "pC is " + playerChoice + " at RPS" );
+            console.log( "cC is " + computerChoice + " at RPS" );
+
+                    if( playerChoice == computerChoice ){
+                        print = "its a tie. try again!";
+                    } else {
+                    if(playerChoice == 0 && computerChoice == 1 ){
+                        print = "paper beats rock, you loose";
+                            computerScore ++;
+                            matches++;
+                    } else if (playerChoice == 0 && computerChoice == 2 ){
+                        print = "rock beats scissors, you win!";
+                            playerScore ++;
+                            matches++;
+                    } else if ( playerChoice == 1 && computerChoice == 2 ){
+                            print = " scissors beats paper, you loose";
+                            computerScore ++;
+                            matches++;
+                    } else if ( playerChoice == 1 && computerChoice == 0 ){
+                        print = "paper beats rock, you win!";
+                            playerScore++;
+                            matches++;
+                     }else if ( playerChoice == 2 && computerChoice == 1 ){
+                        print = "scissors beats paper, you win!";
+                            playerScore++;
+                            matches++;
+                    } else if ( playerChoice == 2 && computerChoice == 0 ){
+                        print = "rock beat scissors, you loose ";
+                            computerScore++;
+                            matches++;
+                    } else if ( playerChoice == null || playerChoice == undefined || playerChoice == 8 ){
+                        print = "somethin went wrong, try again ";
+                    } else {
+                        print = " how did u manage to do this";
+                        }
+                    }
+            
+            document.getElementById("result").innerHTML = print ;
+
+            console.log("playersocre= " + playerScore);
+            document.getElementById("scorePl").innerHTML = playerScore ;
+
+            console.log("computerscore= " + computerScore);
+            document.getElementById("scorePc").innerHTML = computerScore ;
+            
+            console.log ("number of matches(inside RPS) :" + matches);
+                    
+                    var end = ' ';
+                   
+                    if(matches == 3 ){
+                        console.log("termino");
+                        document.getElementById("endScreen").style.width = "100%";
+
+                        if( playerScore > computerScore){
+                            console.log("you win");
+                            var end = " you are the winner!!";
+                            document.getElementById("endBanner").innerHTML = end;
+                            var audio = new Audio('victory.mp3');
+                            audio.play();
+                        } else {
+                            console.log("you loose");
+                            var end = "you loose";
+                            document.getElementById("endBanner").innerHTML = end;
+                        }
+                    }
+
+            return playerScore;
+            return computerScore;
+                 
+        }
+
+        
+
+    
+        
+    </script>
+
+
+
+</body>
